@@ -41,6 +41,17 @@ class Player
     @name = name
   end
 
+  def player_hand
+    case self.hand.value
+    when 'p'
+      "#{name} selected Paper"
+    when 'r'
+      "#{name} selected Rock"
+    when 's'
+      "#{name} selected Scissors"
+    end
+  end
+
   def to_s
     "#{name} currently has a hand of #{self.hand.value}"
   end
@@ -87,6 +98,8 @@ class Game
       player.pick_hand
       computer.pick_hand
       compare_hands
+      puts player.player_hand
+      puts computer.player_hand
       puts "(Press Any Key To Play Again) (Press 'N' to Quit)"
       answer = gets.chomp.downcase
     end until answer == 'n'
