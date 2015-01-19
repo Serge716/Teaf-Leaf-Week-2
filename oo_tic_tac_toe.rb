@@ -41,7 +41,8 @@ class Board
   end
 
   def all_squares_marked?
-    @empty_squares == 0
+    # @empty_squares == 0
+    empty_positions.count == 0
   end
 
   def three_squares_in_a_row?(marker)
