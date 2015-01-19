@@ -32,12 +32,16 @@ class Board
     (1..9).each {|position| @data[position] = Square.new(' ') }
   end
 
+  def select_empty_squares
+    @data.select {|_, squares| squares.empty?}
+  end
+
   def empty_squares
-    @data.select {|_, squares| square.empty?}.values
+    select_empty_squares.values
   end
 
   def empty_positions
-    @data.select {|_, square| square.empty?}.keys
+    select_empty_squares.keys
   end
 
   def all_squares_marked?
