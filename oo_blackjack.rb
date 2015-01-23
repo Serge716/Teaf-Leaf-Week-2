@@ -269,15 +269,3 @@ end
 
 game = BlackJack.new
 game.start
-
-# deck = Deck.new
-
-# player = Player.new("Serge")
-# player.add_card(deck.deal_one)
-# player.add_card(deck.deal_one)
-# player.show_card
-
-# dealer = Dealer.new
-# dealer.add_card(deck.deal_one)
-# dealer.add_card(deck.deal_one)
-# dealer.show_card
