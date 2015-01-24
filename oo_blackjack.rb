@@ -176,7 +176,11 @@ class BlackJack
         puts "Congratulations you hit Blackjack. #{player.name} win."
       end
       play_again?
-    elsif player_or_dealer.is_busted?
+    end
+  end
+
+  def player_or_dealer_busted?(player_or_dealer)
+    if player_or_dealer.is_busted?
       if player_or_dealer.is_a?(Dealer)
         puts "Congratulations, dealer busted #{player.name} wins."
       else
@@ -186,10 +190,21 @@ class BlackJack
     end
   end
 
+  def hit_player
+    new_card = deck.deal_one
+      puts "Dealing card to #{player.name}: #{new_card}"
+      player.add_card(new_card)
+      puts "#{player.name}'s total is now: #{player.total}"
+
+      blackjack_or_bust?(player)
+      player_or_dealer_busted?(player)
+  end
+
   def player_turn
     puts "#{player.name}'s turn."
 
     blackjack_or_bust?(player)
+    player_or_dealer_busted?(player)
     while !player.is_busted?
       puts "What would you like to do 1) Hit or 2) Stay" 
       response = gets.chomp
@@ -202,14 +217,7 @@ class BlackJack
         puts "#{player.name} chose to stay"
         break
       end
-
-      #hit
-      new_card = deck.deal_one
-      puts "Dealing card to #{player.name}: #{new_card}"
-      player.add_card(new_card)
-      puts "#{player.name}'s total is now: #{player.total}"
-
-      blackjack_or_bust?(player)
+      hit_player
     end
     puts "#{player.name} stays at #{player.total}"
   end
@@ -218,6 +226,7 @@ class BlackJack
     puts "Dealer's turn."
 
     blackjack_or_bust?(dealer)
+    player_or_dealer_busted?(dealer)
     while dealer.total < DEALER_HIT_MINIMUN
       new_card = deck.deal_one
       puts  "Dealing card to dealer #{new_card}"
@@ -225,6 +234,7 @@ class BlackJack
       puts "Dealer total is now: #{dealer.total}"
 
       blackjack_or_bust?(dealer)
+      player_or_dealer_busted?(dealer)
     end
 
     puts "Dealer stays at #{dealer.total}."
@@ -257,7 +267,7 @@ class BlackJack
     end
   end
 
-  def start
+  def start_game
     set_player_name
     deal_cards
     show_flop
@@ -268,4 +278,4 @@ class BlackJack
 end
 
 game = BlackJack.new
-game.start
+game.start_game
